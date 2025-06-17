@@ -32,7 +32,7 @@ git clone https://github.com/a-hr/plasmidsaurus_nextflow.git
 The internal dependencies of the pipeline are managed by Nextflow, so you don't need to worry about them. If for some reason Nextflow fails to download them when using Singularity (they are provided as Docker containers), you can manually download them with the Makefile:
 
 ```bash
-# make sure you have Singularity installed and available
+# make sure you have Singularity/Apptainer installed and available.
 make pull
 ```
 
@@ -52,21 +52,24 @@ The pipeline is especially tailored to be run on a HPC cluster, though it can se
 
 1. Go to the directory where you cloned the repository.
 2. Fill in the parameters in the `input_params.yaml` file.
-3. Make sure your system has Docker/Singularity and Nextflow available.
-4. Run the pipeline in the cluster with the following command:
+3. Make sure your system has Docker/Singularity/Apptainer and Nextflow available.
+4. Edit launch.sh file dependending on where you are launching the pipeline
+   ```bash
+      nextflow run main.nf -resume -profile cluster -params-file input_params.yaml # for ATLAS CLUSTER
+      nextflow run main.nf -resume -profile cluster_apptainer -params-file input_params.yaml # for HYPERION
+      nextflow run main.nf -resume -profile local_apptainer -params-file input_params.yaml # for HYPERION WHEN LAUNCHING IT INSIDE A NODE
+      nextflow run main.nf -resume -profile local_singularity -params-file input_params.yaml # for LOCAL
+   ```
+6. Run the pipeline in the cluster with the following command:
 
 ```bash
 sbatch launch.sh
 ```
 
-> The launch script is configured to run the pipeline in a SLURM-managed HPC cluster. If you are using another workload manager, you will need to edit the script accordingly.  
-
 ***If you are running the pipeline in a local machine, you can run it with the following command:***
 
 ```bash
-nextflow run main.nf -profile local_docker -params-file input_params.yaml
-# or with Singularity
-nextflow run main.nf -profile local_singularity -params-file input_params.yaml
+./launch.sh
 ```
 
 ## Parameters
