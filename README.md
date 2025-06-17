@@ -53,12 +53,11 @@ The pipeline is especially tailored to be run on a HPC cluster, though it can se
 1. Go to the directory where you cloned the repository.
 2. Fill in the parameters in the `input_params.yaml` file.
 3. Make sure your system has Docker/Singularity/Apptainer and Nextflow available.
-4. Edit launch.sh file dependending on where you are launching the pipeline
+4. Edit launch.sh file dependending on the HPC where you are launching the pipeline
    ```bash
       nextflow run main.nf -resume -profile cluster -params-file input_params.yaml # for ATLAS CLUSTER
       nextflow run main.nf -resume -profile cluster_apptainer -params-file input_params.yaml # for HYPERION
       nextflow run main.nf -resume -profile local_apptainer -params-file input_params.yaml # for HYPERION WHEN LAUNCHING IT INSIDE A NODE
-      nextflow run main.nf -resume -profile local_singularity -params-file input_params.yaml # for LOCAL
    ```
 6. Run the pipeline in the cluster with the following command:
 
@@ -69,7 +68,9 @@ sbatch launch.sh
 ***If you are running the pipeline in a local machine, you can run it with the following command:***
 
 ```bash
-./launch.sh
+nextflow run main.nf -profile local_docker -params-file input_params.yaml
+# or with Singularity
+nextflow run main.nf -profile local_singularity -params-file input_params.yaml
 ```
 
 ## Parameters
