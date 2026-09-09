@@ -15,11 +15,6 @@
                     "default": "test_run",
                     "description": "name of the experiment (files will be named after it)"
                 },
-                "output_dir": {
-                    "type": "string",
-                    "hidden": true,
-                    "default": "output-pipeline"
-                },
                 "get_sashimis": {
                     "type": "boolean",
                     "default": true,
@@ -46,11 +41,18 @@
                     "format": "file-path",
                     "default": "plots_config.csv",
                     "pattern": ".*\\.csv$"
+                },
+                "output_dir": {
+                    "type": "string",
+                    "format": "directory-path",
+                    "hidden": false,
+                    "default": "output-pipeline/"
                 }
             },
             "required": [
                 "input_bam",
-                "plots_config"
+                "plots_config",
+                "output_dir"
             ]
         },
         "qc_options": {
@@ -61,7 +63,7 @@
             "properties": {
                 "min_len": {
                     "type": "integer",
-                    "default": 200,
+                    "default": 100,
                     "description": "minimum length a read should have in order to be processed"
                 },
                 "max_len": {
@@ -79,7 +81,7 @@
             "properties": {
                 "sashimi_min_cov": {
                     "type": "integer",
-                    "default": 5,
+                    "default": 10,
                     "description": "minimum coverage of an event in order to be included"
                 },
                 "sashimi_alpha": {
@@ -89,6 +91,7 @@
                 },
                 "sashimi_collapse_groups": {
                     "type": "boolean",
+                    "default": true,
                     "description": "collapse the files by group"
                 },
                 "sashimi_shrink": {
@@ -100,15 +103,30 @@
                     "default": true,
                     "description": "set the same Y-axis scale to all the groups/files"
                 },
-                "sashimi_annot_height": {
-                    "type": "integer",
-                    "default": 5,
-                    "description": "height of the annotations in the transcript track"
-                },
                 "sashimi_width": {
                     "type": "integer",
                     "default": 15,
                     "description": "width in cm of the output plot"
+                },
+                "sashimi_height": {
+                    "type": "integer",
+                    "default": 2,
+                    "description": "Height of the individual signal plot in inches"
+                },
+                "sashimi_aggregation": {
+                    "type": "string",
+                    "default": "median_j",
+                    "description": "Aggregate function for overlay: <mean> <median> <mean_j> <median_j>. Use mean_j | median_j to keep density overlay but aggregate junction counts."
+                },
+                "sashimi_basesize": {
+                    "type": "integer",
+                    "default": 14,
+                    "description": "Base font size of the plot."
+                },
+                "sashimi_out_format": {
+                    "type": "string",
+                    "default": "pdf",
+                    "description": "Output file format: <pdf> <svg> <png> <jpeg> <tiff>"
                 },
                 "sashimi_gtf_annotations": {
                     "type": "boolean",
@@ -121,6 +139,11 @@
                     "format": "file-path",
                     "default": "reference.gtf",
                     "pattern": ".*\\.gtf$"
+                },
+                "sashimi_annot_height": {
+                    "type": "integer",
+                    "default": 5,
+                    "description": "height of the annotations in the transcript track"
                 }
             }
         }

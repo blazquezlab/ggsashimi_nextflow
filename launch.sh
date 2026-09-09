@@ -9,6 +9,10 @@ module load Nextflow Apptainer
 export NXF_OPTS="-Xms500M -Xmx8G"
 
 # launch the main process
+<<<<<<< HEAD
+=======
+cd ggsashimi_nextflow {dir}
+>>>>>>> mery/main
 nextflow run main.nf -resume -profile local_apptainer -params-file input_params.yaml
 
 #nextflow run main.nf -resume -profile cluster -params-file input_params.yaml # for ATLAS CLUSTER
